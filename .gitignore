@@ -108,3 +108,5 @@ dataset/
 
 #parameter
 checkpoints/
+
+.idea
