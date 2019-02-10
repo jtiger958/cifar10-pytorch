@@ -20,11 +20,8 @@ class vgg16(nn.Module):
         )
 
     def forward(self, x):
-        print(x.shape)
         x = self.feature(x)
-        print(x.shape)
         x = x.view(x.size(0), -1)
-        print(x.shape)
         x = self.classifier(x)
         return x
 

@@ -59,7 +59,7 @@ class Trainer:
                 loss.backward()
                 optimizer.step()
 
-                if (step + 1) % 100 == 0:
+                if (step + 1) % 10 == 0:
                     print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
                           .format(epoch + 1, num_epoch, step + 1, total_step, loss.item()))
 
