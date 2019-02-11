@@ -1,5 +1,4 @@
 import torch.nn as nn
-import torchvision.models.vgg
 
 class vgg16(nn.Module):
     def __init__(self, num_classes):
@@ -10,13 +9,13 @@ class vgg16(nn.Module):
         self.feature = self.make_feature_layer(cfg=cfg)
 
         self.classifier = nn.Sequential(
-            nn.Linear(512 * 7 * 7, 4096),
+            nn.Linear(512, 512),
             nn.ReLU(True),
             nn.Dropout(),
-            nn.Linear(4096, 4096),
+            nn.Linear(512, 512),
             nn.ReLU(True),
             nn.Dropout(),
-            nn.Linear(4096, num_classes),
+            nn.Linear(512, num_classes),
         )
 
     def forward(self, x):

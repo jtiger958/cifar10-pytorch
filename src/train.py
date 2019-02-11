@@ -1,7 +1,7 @@
 from model.VGG import vgg16
 import torch
 import os
-import glob
+from glob import glob
 import torch.nn as nn
 
 def weights_init(m):
@@ -14,10 +14,10 @@ def weights_init(m):
         m.bias.data.fill_(0)
 
 class Trainer:
-    def __init__(self, config, train_loader, num_class=100):
+    def __init__(self, config, train_loader, num_class=10):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.checkpoint_dir = config.checkpoint_dir
-        self.num_class = 100
+        self.num_class = num_class
         self.learning_rate = config.lr
         self.train_loader = train_loader
         self.epoch = config.epoch
@@ -25,7 +25,7 @@ class Trainer:
         self.build_model()
 
     def build_model(self):
-        self.net = vgg16(100)
+        self.net = vgg16(self.num_class)
         self.net.apply(weights_init)
         self.net.to(self.device)
         self.load_model()

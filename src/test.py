@@ -1,7 +1,7 @@
 from model.VGG import vgg16
 import torch
 import os
-import glob
+from glob import glob
 import torch.nn as nn
 
 
@@ -16,16 +16,17 @@ def weights_init(m):
 
 
 class Tester:
-    def __init__(self, config, test_loader, num_class=100):
+    def __init__(self, config, test_loader, num_class=10):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.checkpoint_dir = config.checkpoint_dir
-        self.num_class = 100
+        self.num_class = num_class
         self.learning_rate = config.lr
         self.test_loader = test_loader
         self.epoch = config.epoch
+        self.build_model()
 
     def build_model(self):
-        self.net = vgg16(100)
+        self.net = vgg16(self.num_class)
         self.net.apply(weights_init)
         self.net.to(self.device)
         self.load_model()
@@ -33,7 +34,7 @@ class Tester:
     def load_model(self):
         print("[*] Load checkpoint in ", str(self.checkpoint_dir))
 
-        if not os.listdir(self.model_path):
+        if not os.listdir(self.checkpoint_dir):
             print("[!] No checkpoint in ", str(self.checkpoint_dir))
             os.mkdir(self.checkpoint_dir)
             return
@@ -55,6 +56,6 @@ class Tester:
 
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-            print('testing... {}/{}', step, len(self.test_loader))
+            print('testing... {}/{}'.format(step, len(self.test_loader)))
 
         print('[*] Test accuracy on %d test images: %.2f%%' % (total, 100 * correct / total))

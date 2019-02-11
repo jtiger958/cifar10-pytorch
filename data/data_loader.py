@@ -6,17 +6,15 @@ def get_loader(batch_size):
     # MNIST dataset
 
     transform_image = transforms.Compose([
-        transforms.Resize(224),
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
-    train_dataset = torchvision.datasets.cifar.CIFAR100(root='./data/dataset/',
+    train_dataset = torchvision.datasets.cifar.CIFAR10(root='./data/dataset/',
                                                train=True,
                                                transform=transform_image,
                                                download=True)
 
-    test_dataset = torchvision.datasets.cifar.CIFAR100(root='./data/dataset/',
+    test_dataset = torchvision.datasets.cifar.CIFAR10(root='./data/dataset/',
                                               train=False,
                                               transform=transform_image)
 
