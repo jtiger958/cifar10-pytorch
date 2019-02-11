@@ -38,8 +38,7 @@ class Trainer:
             return
 
         model = glob(os.path.join(self.checkpoint_dir, "vgg16*.pth"))
-        file_name = os.path.join(self.checkpoint_dir, "vgg16-{}.pth".format(len(model)-1))
-        self.net.load_state_dict(torch.load(file_name, map_location=self.device))
+        self.net.load_state_dict(torch.load(model[-1], map_location=self.device))
         print("[*] Load Model from %s: " % str(self.checkpoint_dir), str(model[-1]))
 
     def train(self):
