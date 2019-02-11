@@ -1,1 +1,1 @@
-# cifar100-pytorch
+# cifar10-pytorch
