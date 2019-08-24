@@ -23,5 +23,8 @@ class LambdaLR:
         self.decay_epoch = decay_epoch
 
     def step(self, epoch):
-        factor = pow(0.5, int(self.offset + epoch / self.decay_epoch))
+        if int(self.offset + epoch / self.decay_epoch) > 4:
+            factor = pow(0.5, 4)
+        else:
+            factor = pow(0.5, int(self.offset + epoch / self.decay_epoch))
         return factor
