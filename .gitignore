@@ -107,6 +107,7 @@ venv.bak/
 dataset/
 
 #parameter
-checkpoints/
+cifar-10/checkpoints/
 
 .idea
+losses_check

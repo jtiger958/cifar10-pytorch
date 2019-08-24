@@ -2,7 +2,6 @@ from model.VGG import vgg16
 import torch
 import os
 from glob import glob
-import torch.nn as nn
 
 
 def weights_init(m):
@@ -39,9 +38,14 @@ class Tester:
             os.mkdir(self.checkpoint_dir)
             return
 
-        model = glob(os.path.join(self.checkpoint_dir, "vgg16*.pth"))
-        self.net.load_state_dict(torch.load(model[-1], map_location=self.device))
-        print("[*] Load Model from %s: " % str(self.checkpoint_dir), str(model[-1]))
+        model = glob(os.path.join(self.checkpoint_dir, "vgg16-*.pth"))
+
+        file_index = [int(index.split('-')[-1].split('.')[0]) for index in model]
+        file_index.sort()
+        path = model[0].split('-')[0] + '-' + f"{file_index[-1]}.pth"
+
+        self.net.load_state_dict(torch.load(path, map_location=self.device))
+        print(f"[*] Load Model from {path}")
 
     def test(self):
         correct = 0
